@@ -1,9 +1,9 @@
 <template>
   <!-- v-app: elemento da biblioteca vuetify ultilizada para iniciar uma aplicação. Deve ser chamada uma unica vez -->
-  <v-app>
+  <v-app class="panel">
     <v-app-bar-title id="topbar">
       <div class="center">
-        <img id="logo" src="https://salvadorcaps.azurewebsites.net/img/Logo.e282df00.png" />
+        <img id="logo" src="./assets/Logo.png" />
       </div>
       <!-- v-row: criação de uma linha que vai de 1 a 12 onde pode ser adicionado colunas com suas respectivas confs -->
       <div class="social">
@@ -85,8 +85,7 @@ export default {
   display: table;
   padding: auto;
   color: white;
-  background: url("https://salvadorcaps.azurewebsites.net/img/black.dbf613c7.jpeg")
-    no-repeat bottom center scroll;
+  background: url("./assets/black.jpeg") no-repeat bottom center scroll;
   background-position: auto;
   background-size: cover;
 }
@@ -134,13 +133,20 @@ export default {
   vertical-align: bottom;
 }
 
+.panel {
+  background: url("./assets/white.jpeg") no-repeat fixed !important;
+  background-size: 100% 100% !important;
+  color: #2c3e50 !important;
+  padding-bottom: 100px;
+}
+
 .footer {
   width: 100%;
   font-size: 12px;
   text-align: center;
   position: fixed;
   bottom: 0;
-  background: url("https://salvadorcaps.azurewebsites.net/img/black.dbf613c7.jpeg");
+  background: url("./assets/black.jpeg");
 }
 .footer > div {
   width: 100%;
@@ -158,6 +164,7 @@ export default {
 <style>
 .transparent {
   background-color: transparent !important;
+  box-shadow: none !important;
 }
 .center {
   display: flex;

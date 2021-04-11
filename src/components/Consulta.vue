@@ -1,33 +1,15 @@
 <template>
-  <v-row dense>
-    <v-col lg="3" xl="3" md="3" sm="12" xs="12" v-for="item in items" :key="item.cap">
-      <v-card max-width="374">
-        <v-img height="250" src="https://media.istockphoto.com/photos/baseball-hat-picture-id864713752?b=1&k=6&m=864713752&s=170667a&w=0&h=pfWcBTNUDWKp7y3wE5m0XLphhBqLPlthMVcWGft189A="></v-img>
-        <v-card-title>{{item.nome}}</v-card-title>
-
-        <v-card-text>
-          <v-row align="center" class="mx-0">
-            <v-rating :value="parseFloat(item.nota)" color="amber" dense half-increments readonly size="14"></v-rating>
-
-            <div class="grey--text ml-4">
-              {{item.nota}} (413)
-            </div>
-          </v-row>
-
-          <div class="my-4 subtitle-1">
-            R$ • {{item.valor}}
-          </div>
-
-          <div>{{item.descricao}}</div>
-        </v-card-text>
-
-        <v-divider class="mx-4"></v-divider>
-
-        <v-card-actions>
-          <v-btn color="success">
-            Adicionar na sacola
-          </v-btn>
-        </v-card-actions>
+  <v-row class="center zone">
+    <v-card-title class="title">
+      <h1>{{marca}}</h1>
+    </v-card-title>
+    <v-col xl="2" lg="3" md="4" sm="5" xs="11" v-for="item in items" :key="item.cap" :class="{'center': $vuetify.breakpoint.xs}">
+      <v-card max-width="374" class="transparent product">
+        <v-img class="product-box" height="250" src="https://media.istockphoto.com/photos/baseball-hat-picture-id864713752?b=1&k=6&m=864713752&s=170667a&w=0&h=pfWcBTNUDWKp7y3wE5m0XLphhBqLPlthMVcWGft189A="></v-img>
+        <v-card-title class="center product-name">{{item.nome}}</v-card-title>
+        <div class="center product-price">
+          <small>R$</small><b>{{ getInteger(item.valor) }},</b><small>{{ getDecimal(item.valor) }}</small>
+        </div>
       </v-card>
     </v-col>
   </v-row>
@@ -36,6 +18,10 @@
 export default {
   // Definição das props do componente
   props: {
+    marca: {
+      Required: true,
+      type: [Object, String]
+    },
     items: {
       Required: true,
       type: [Object, Array]
@@ -45,9 +31,55 @@ export default {
     return {
       selection: ''
     }
+  },
+  methods: {
+    getInteger(num) {
+      return Math.floor(num).toString();
+    },
+    getDecimal(num) {
+      return (num - Math.floor(num)).toFixed(2).replace("0.", "");
+    },
   }
 }
 </script>
 <!-- scoped: a camada de estilo se aplica somente a este component -->
 <style scoped>
+.title {
+  width: 100%;
+  float: left;
+  margin: 20px 0px 0px;
+  display: flex;
+  justify-content: center;
+}
+.title h1 {
+  font-family: "Montserrat";
+  font-size: 40px;
+  font-weight: 800;
+  margin: 0px;
+}
+.product {
+  margin: 12px;
+}
+.product-box {
+  max-height: 374;
+  max-width: 374;
+  border: 10px solid #feb425;
+}
+.product-name {
+  padding: 10px 10px 0px;
+  font-size: 18px;
+  font-weight: 700;
+}
+.product-price {
+  display: flex;
+}
+.product-price > small {
+  align-self: flex-end;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 2px;
+}
+.product-price > b {
+  align-self: flex-end;
+}
 </style>
