@@ -1,23 +1,23 @@
 <template>
   <!-- :items: propriedade adicionada no componente -->
-  <ConsultaProdutos :marca="marca" :items="items" />
+  <Search :brand="brand" :items="items" />
 </template>
 
 <script>
 // @ is an alias to /src
-import ConsultaProdutos from '@/components/Consulta.vue'
+import Search from '@/components/Search.vue'
 import Json from '@/domain/produtos.js'
 
 export default {
-  name: 'Home',
+  name: 'Produtos',
   components: {
-    ConsultaProdutos,
+    Search,
     Json
   },
   data() {
     return {
       items: [],
-      marca: this.$route.params.marca
+      brand: this.$route.params.brand
     }
   },
   /* Toda vez que houver alguma alteração de valor no route.params ele carrega a lista de produtos
@@ -25,20 +25,20 @@ export default {
   */
   watch: {
     '$route.params.marca'() {
-      this.marca = this.$route.params.marca
-      this.items = this.produtos(this.$route.params.marca)
+      this.brand = this.$route.params.brand
+      this.items = this.produtos(this.$route.params.brand)
     },
   },
   created() {
-    console.log(this.$route.params.marca)
+    console.log(this.$route.params.brand)
 
-    console.log(this.marca)
-    this.items = this.produtos(this.marca)
+    console.log(this.brand)
+    this.items = this.produtos(this.brand)
   },
   methods: {
-    produtos(marca) {
+    produtos(brand) {
       var produtos = new Json()
-      return produtos.listar(marca)
+      return produtos.listar(brand)
     }
   }
 }

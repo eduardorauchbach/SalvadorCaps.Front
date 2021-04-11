@@ -3,7 +3,9 @@
   <v-app class="panel">
     <v-app-bar-title id="topbar">
       <div class="center">
-        <img id="logo" src="./assets/Logo.png" />
+        <router-link :to="{name:'Home'}">
+          <img id="logo" src="./assets/Logo.png" />
+        </router-link>
       </div>
       <!-- v-row: criação de uma linha que vai de 1 a 12 onde pode ser adicionado colunas com suas respectivas confs -->
       <div class="social">
@@ -30,7 +32,7 @@
             <v-container>
               <v-row>
                 <div v-for="(item, index) in menuItems" :key="item.name">
-                  <v-btn class="item" plain :to="{ name: 'Produtos', params: { marca: item.name } }">
+                  <v-btn class="item" plain :to="{ name: 'Products', params: { brand: item.name } }">
                     {{ item.name }}
                   </v-btn>
                   <v-icon class="separator" v-if="index != Object.keys(menuItems).length - 1">mdi-circle-medium</v-icon>
@@ -43,7 +45,7 @@
         </v-toolbar>
       </v-card>
     </v-app-bar-title>
-    <v-container>
+    <v-container class="main">
       <router-view />
     </v-container>
     <v-footer class="footer">
@@ -97,7 +99,7 @@ export default {
   background-image: linear-gradient(to right, #ebb738, #815823);
   color: #dadada;
   position: relative;
-  margin: 5px 0px 10px;
+  margin: 0px 0px 15px;
 }
 .navbar i {
   font-size: 30px !important;
@@ -120,7 +122,7 @@ export default {
   float: right;
   position: absolute;
   right: 0;
-  top: 120px;
+  top: 135px;
   width: 40%;
 }
 .social div {
@@ -157,6 +159,7 @@ export default {
 }
 
 #logo {
+  margin-top: 10px;
   width: 180px;
 }
 </style>
@@ -169,5 +172,8 @@ export default {
 .center {
   display: flex;
   justify-content: center;
+}
+.main {
+  width: 100% !important;
 }
 </style>

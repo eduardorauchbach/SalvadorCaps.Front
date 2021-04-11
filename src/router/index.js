@@ -5,10 +5,16 @@ Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/produtos/:marca',
-    name: 'Produtos',
+    path: '/',
+    name: 'Home',
     // Carrega somente quando o component ou view for acessada
-    component: () => import(/* webpackChunkName: "about" */ '../views/Produtos.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../views/Home.vue')
+  },
+  {
+    path: '/produtos/:brand',
+    name: 'Products',
+    // Carrega somente quando o component ou view for acessada
+    component: () => import(/* webpackChunkName: "about" */ '../views/Products.vue')
   }
 ]
 // mode: 'history' =  Remove tralha(#) da url

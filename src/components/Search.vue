@@ -1,11 +1,11 @@
 <template>
-  <v-row class="center zone">
+  <v-row class="center main">
     <v-card-title class="title">
-      <h1>{{marca}}</h1>
+      <h1>{{brand}}</h1>
     </v-card-title>
     <v-col xl="2" lg="3" md="4" sm="5" xs="11" v-for="item in items" :key="item.cap" :class="{'center': $vuetify.breakpoint.xs}">
       <v-card max-width="374" class="transparent product">
-        <v-img class="product-box" height="250" src="https://media.istockphoto.com/photos/baseball-hat-picture-id864713752?b=1&k=6&m=864713752&s=170667a&w=0&h=pfWcBTNUDWKp7y3wE5m0XLphhBqLPlthMVcWGft189A="></v-img>
+        <v-img class="product-box" src="https://media.istockphoto.com/photos/baseball-hat-picture-id864713752?b=1&k=6&m=864713752&s=170667a&w=0&h=pfWcBTNUDWKp7y3wE5m0XLphhBqLPlthMVcWGft189A="></v-img>
         <v-card-title class="center product-name">{{item.nome}}</v-card-title>
         <div class="center product-price">
           <small>R$</small><b>{{ getInteger(item.valor) }},</b><small>{{ getDecimal(item.valor) }}</small>
@@ -18,7 +18,7 @@
 export default {
   // Definição das props do componente
   props: {
-    marca: {
+    brand: {
       Required: true,
       type: [Object, String]
     },
