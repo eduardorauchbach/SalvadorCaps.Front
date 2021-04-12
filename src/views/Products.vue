@@ -24,7 +24,7 @@ export default {
   *  Isso foi feito por conta do meu created ja te sido chamado e eu estar no mesmo componente pois o mesmo ja foi carregado. 
   */
   watch: {
-    '$route.params.marca'() {
+    '$route.params.brand'() {
       this.brand = this.$route.params.brand
       this.items = this.produtos(this.$route.params.brand)
     },
