@@ -91,9 +91,6 @@ export default {
   background-position: auto;
   background-size: cover;
 }
-#topbar > div {
-  display: none;
-}
 .navbar {
   float: left;
   width: 100%;
@@ -142,7 +139,6 @@ export default {
   background: url("./assets/white.jpeg") no-repeat fixed !important;
   background-size: 100% 100% !important;
   color: #2c3e50 !important;
-  padding-bottom: 100px;
 }
 
 .footer {
@@ -168,6 +164,11 @@ export default {
 </style>
 
 <style>
+.v-app-bar-title__content {
+  /* header fix */
+  position: absolute;
+}
+
 .transparent {
   background-color: transparent !important;
   box-shadow: none !important;
@@ -178,5 +179,8 @@ export default {
 }
 .main {
   width: 100% !important;
+}
+.pad-footer {
+  padding-bottom: 100px;
 }
 </style>

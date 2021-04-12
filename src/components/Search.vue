@@ -1,5 +1,5 @@
 <template>
-  <v-row class="center main">
+  <v-row class="center main pad-footer">
     <v-card-title class="title">
       <h1>{{brand}}</h1>
     </v-card-title>

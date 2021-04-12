@@ -43,7 +43,7 @@ export default {
 .brand-box {
   max-height: 374;
   max-width: 374;
-  width: 245%;
+  width: 230%;
   transform: skewX(-17deg);
   margin-left: -35%;
 }
