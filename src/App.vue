@@ -91,6 +91,9 @@ export default {
   background-position: auto;
   background-size: cover;
 }
+#topbar > div {
+  display: none;
+}
 .navbar {
   float: left;
   width: 100%;
