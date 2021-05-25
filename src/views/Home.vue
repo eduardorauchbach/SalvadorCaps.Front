@@ -6,13 +6,13 @@
 <script>
 // @ is an alias to /src
 import Brands from '@/components/Brands.vue'
-import Json from '@/domain/produtos.js'
+import Axios from "axios";
 
 export default {
   name: 'Home',
   components: {
     Brands,
-    Json
+    Axios
   },
   data() {
     return {
@@ -21,14 +21,12 @@ export default {
     }
   },
   methods: {
-    getTopMenu() {
-      this.items = [
-        { id: 1, name: 'MAIS71CLOTHING' },
-        { id: 2, name: 'SEVEN' },
-        { id: 3, name: 'BLACK BRASIL' },
-        { id: 4, name: 'NEW ERA' },
-      ]
-    }
+    async getTopMenu() {
+      await Axios.get('https://salvadorcapsapi.azurewebsites.net/api/Brand')
+        .then((response => {
+          this.items = response.data
+        }))
+    },
   },
   beforeMount() {
     this.getTopMenu()

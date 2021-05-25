@@ -3,51 +3,33 @@
   <v-app class="panel">
     <v-app-bar-title id="topbar">
       <div class="center">
-        <router-link :to="{name:'Home'}">
+        <router-link :to="{ name: 'Home' }">
           <img id="logo" src="./assets/Logo.png" />
         </router-link>
       </div>
-      <!-- v-row: criação de uma linha que vai de 1 a 12 onde pode ser adicionado colunas com suas respectivas confs -->
-      <div class="social">
-        <v-row>
-          <v-col class="icon" xs="3" sm="3" md="3" lg="3" xl="3">
-            <img src="./assets/icon-facebook.png" />
-          </v-col>
-          <v-col class="icon" xs="3" sm="3" md="3" lg="3" xl="3">
-            <img src="./assets/icon-instagram.png" />
-          </v-col>
-          <v-col class="icon" xs="3" sm="3" md="3" lg="3" xl="3">
-            <img src="./assets/icon-whatsApp.png" />
-          </v-col>
-          <v-col class="icon" xs="3" sm="3" md="3" lg="3" xl="3">
-            <img src="./assets/icon-sacola.png" />
-          </v-col>
-        </v-row>
+      <div class="social-relative-container">
+        <div class="social-container">
+          <div class="icon-render" v-for="(icon, index) in menuIcons" :key="index">
+            <v-img :src="icon" alt="" />
+          </div>
+        </div>
       </div>
-      <v-card flat tile>
-        <v-toolbar class="navbar">
-          <v-icon>mdi-chevron-left</v-icon>
-          <v-spacer></v-spacer>
-          <v-btn-toggle class="transparent">
-            <v-container>
-              <v-row>
-                <div v-for="(item, index) in menuItems" :key="item.name">
-                  <v-btn class="item" plain :to="{ name: 'Products', params: { brand: item.name } }">
-                    {{ item.name }}
-                  </v-btn>
-                  <v-icon class="separator" v-if="index != Object.keys(menuItems).length - 1">mdi-circle-medium</v-icon>
-                </div>
-              </v-row>
-            </v-container>
-          </v-btn-toggle>
-          <v-spacer></v-spacer>
-          <v-icon>mdi-chevron-right</v-icon>
-        </v-toolbar>
-      </v-card>
+
     </v-app-bar-title>
+    <v-card tile>
+      <v-tabs dark show-arrows class="navbar">
+        <v-row justify-md="center" class="navbar-row">
+          <v-tab v-for="(item, index) in menuItems" :key="index" :to="{ name: 'Products', params: { brandName: item.name }}" class="items">
+            <v-icon class="navbar-bullet" v-if="showBullets(index)">mdi-circle-medium</v-icon>{{ item.name }}
+          </v-tab>
+        </v-row>
+      </v-tabs>
+    </v-card>
+
     <v-container class="main">
       <router-view />
     </v-container>
+
     <v-footer class="footer">
       <div><b>(71) 99208-92-49</b></div>
       <div><b>Av. Octávio Mangabeira, 13, GVT</b></div>
@@ -57,82 +39,85 @@
 </template>
 
 <script>
-
+import axios from 'axios'
 export default {
   data() {
     return {
-      menuItems: []
-    }
+      menuItems: [],
+
+      menuIcons: [
+        require("./assets/icon-facebook.png"),
+        require("./assets/icon-instagram.png"),
+        require("./assets/icon-whatsApp.png"),
+        require("./assets/icon-sacola.png"),
+      ],
+    };
+  },
+  created() {
+    this.getBrands()
   },
   methods: {
-    getTopMenu() {
-      this.menuItems = [
-        { id: 1, name: 'MAIS71CLOTHING', target: '#' },
-        { id: 2, name: 'SEVEN', target: '#' },
-        { id: 3, name: 'BLACK BRASIL', target: '#' },
-        { id: 4, name: 'NEW ERA', target: '#' },
-        { id: 5, name: 'NYC', target: '#' }
-      ]
-    }
+    async getBrands() {
+      await axios.get(`https://salvadorcapsapi.azurewebsites.net/api/Brand`)
+        .then((response => {
+          this.menuItems = response.data
+          console.log(this.menuItems)
+        }))
+    },
+    showBullets(index) {
+      // return index != 0 && index != this.menuItems.length - 1;
+      return index != 0;
+    },
   },
-  beforeMount() {
-    this.getTopMenu()
-  }
-}
+};
 </script>
 
 <!-- scoped: Utilizado para aplicar estilo somente neste componente.  -->
 <style scoped>
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 #topbar {
-  display: table;
-  padding: auto;
   color: white;
   background: url("./assets/black.jpeg") no-repeat bottom center scroll;
   background-position: auto;
   background-size: cover;
 }
-.navbar {
-  float: left;
-  width: 100%;
-  overflow: hidden;
 
-  background-image: linear-gradient(to right, #ebb738, #815823);
-  color: #dadada;
-  position: relative;
-  margin: 0px 0px 15px;
-}
-.navbar i {
-  font-size: 30px !important;
-  color: #dadada;
-}
-.navbar .item {
+.navbar .items {
   font-family: "Montserrat";
-  font-size: 22px !important;
-  color: #dadada !important;
-  text-decoration: none;
+  font-size: 1.5em;
+  padding: 0.9em 0;
+  color: #dadada;
   font-weight: 900;
-  padding: 0px 8px !important;
-}
-.navbar .separator {
-  font-size: 30px !important;
-  color: #cabaa3 !important;
 }
 
-.social {
-  float: right;
+.navbar-bullet {
+  font-size: 2em !important;
+}
+
+.social-relative-container {
+  position: relative;
+  padding: 0.1em;
+}
+
+.social-container {
+  display: flex;
+  flex-direction: column;
   position: absolute;
+  transform: translateY(-10em);
   right: 0;
-  top: 135px;
-  width: 40%;
 }
-.social div {
-  float: right;
-}
-.social img {
-  float: right;
-  max-width: 50px;
-  width: 100%;
-  vertical-align: bottom;
+
+.social-container .icon-render {
+  width: 2em;
+  padding: 0.1em;
+  margin: 0.3em 0.1em;
 }
 
 .panel {
@@ -161,25 +146,62 @@ export default {
   margin-top: 10px;
   width: 180px;
 }
+
+.center {
+  display: flex;
+  justify-content: center;
+}
+
+@media screen and (min-width: 768px) {
+  .social-container {
+    flex-direction: row;
+    transform: translateY(-2.5em);
+    font-size: 1.8rem;
+  }
+}
 </style>
 
+
 <style>
-.v-app-bar-title__content {
-  /* header fix */
+/* Without scope to change the tabs background */
+/*  */
+div[role="tablist"] {
+  background-image: linear-gradient(to right, #ebb738, #815823);
+  /* transform: translateY(-1.3em); */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2em 0;
+  position: relative;
+}
+
+/* 
+  get edu feedback before undo this
+div[role="tablist"]::before {
+  background-color: black;
+  content: "";
+  width: 100%;
   position: absolute;
+  height: 1.32em;
+  bottom: -1.35em;
+} */
+
+@media screen and (min-width: 768px) {
+  div[role="tablist"] {
+    padding: 2.5em 0;
+  }
 }
 
 .transparent {
   background-color: transparent !important;
   box-shadow: none !important;
 }
+
 .center {
   display: flex;
   justify-content: center;
 }
-.main {
-  width: 100% !important;
-}
+
 .pad-footer {
   padding-bottom: 100px;
 }

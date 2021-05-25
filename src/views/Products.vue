@@ -1,45 +1,51 @@
 <template>
-  <!-- :items: propriedade adicionada no componente -->
-  <Search :brand="brand" :items="items" />
+  <Search :brand="brand" :products="products" />
 </template>
 
 <script>
 // @ is an alias to /src
-import Search from '@/components/Search.vue'
-import Json from '@/domain/produtos.js'
+import Search from "@/components/Search.vue";
+import Axios from "axios";
 
 export default {
-  name: 'Produtos',
+  name: "Produtos",
   components: {
     Search,
-    Json
+    Axios,
   },
   data() {
     return {
-      items: [],
-      brand: this.$route.params.brand
-    }
+      products: [],
+      brand: {},
+    };
   },
-  /* Toda vez que houver alguma alteração de valor no route.params ele carrega a lista de produtos
-  *  Isso foi feito por conta do meu created ja te sido chamado e eu estar no mesmo componente pois o mesmo ja foi carregado. 
-  */
+
   watch: {
-    '$route.params.brand'() {
-      this.brand = this.$route.params.brand
-      this.items = this.produtos(this.$route.params.brand)
+    '$route.params.brandName'() {
+      this.getBrand(this.$route.params.brandName).then((response) => {
+        this.getProducts();
+      })
     },
   },
-  created() {
-    console.log(this.$route.params.brand)
-
-    console.log(this.brand)
-    this.items = this.produtos(this.brand)
+  async created() {
+    await this.getBrand(this.$route.params.brandName).then(async (response) => {
+      await this.getProducts();
+    })
   },
   methods: {
-    produtos(brand) {
-      var produtos = new Json()
-      return produtos.listar(brand)
-    }
-  }
-}
+    async getProducts() {
+      console.log(this.brand)
+      await Axios.get('https://salvadorcapsapi.azurewebsites.net/api/Product').then((response) => {
+        this.products = response.data.filter(
+          (product) => product.brandID == this.brand.id
+        );
+      });
+    },
+    async getBrand(brandName) {
+      await Axios.get('https://salvadorcapsapi.azurewebsites.net/api/Brand?name=' + brandName).then((response => {
+        this.brand = response.data[0];
+      }))
+    },
+  },
+};
 </script>
