@@ -17,14 +17,17 @@ export default {
   data() {
     return {
       items: [],
-      brand: this.$route.params.brand
+      brand: this.$route.params.brandName
     }
   },
   methods: {
     async getTopMenu() {
       await Axios.get('https://salvadorcapsapi.azurewebsites.net/api/Brand')
         .then((response => {
-          this.items = response.data
+          console.log(response.data)
+          this.items = response.data.filter(
+            (item) => item.promo == true
+          );
         }))
     },
   },

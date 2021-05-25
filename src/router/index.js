@@ -11,7 +11,7 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/Home.vue')
   },
   {
-    path: '/produtos/:brandName',
+    path: '/:brandName',
     name: 'Products',
     // Carrega somente quando o component ou view for acessada
     component: () => import(/* webpackChunkName: "about" */ '../views/Products.vue')

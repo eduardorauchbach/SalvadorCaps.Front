@@ -1,8 +1,8 @@
 <template>
   <v-row class="center main">
-    <v-col xl="2" lg="3" md="4" sm="5" cols="7" v-for="item in brand" :key="item.id">
-      <v-card v-if="item.promo" max-width="400" max-height="500" class="transparent brand pad-footer ">
-        <router-link :to="{ name:'Products', params: { brandName: item.name,  brand: item }}">
+    <v-col xl="2" lg="3" md="4" sm="5" cols="7" v-for="item in items" :key="item.id">
+      <v-card max-width="400" max-height="calc(100vh - 388px)" class="transparent brand pad-footer ">
+        <router-link :to="{ name:'Products', params: { brandName: item.name }}">
           <img class="brand-box" :src=item.desktopSpotlightImage />
         </router-link>
       </v-card>
@@ -21,20 +21,8 @@ export default {
   },
   data: () => ({
     selection: '',
-    brand: [],
   }),
-  created() {
-    this.getBrands()
-  },
   methods: {
-    async getBrands() {
-      await Axios.get(`https://salvadorcapsapi.azurewebsites.net/api/Brand`)
-        .then((response => {
-          this.brand = response.data
-          console.log(this.brand)
-        }))
-
-    },
     getInteger(num) {
       return Math.floor(num).toString();
     },
