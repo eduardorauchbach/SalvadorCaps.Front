@@ -18,11 +18,15 @@
     </v-app-bar-title>
     <v-card tile>
       <v-tabs dark show-arrows class="navbar">
+        <v-icon>mdi-chevron-left</v-icon>
+        <v-spacer></v-spacer>
         <v-row justify-md="center" class="navbar-row">
           <v-tab v-for="(item, index) in menuItems" :key="index" :to="{ name: 'Products', params: { brandName: item.name }}" class="items">
             <v-icon class="navbar-bullet" v-if="showBullets(index)">mdi-circle-medium</v-icon>{{ item.name }}
           </v-tab>
         </v-row>
+        <v-spacer></v-spacer>
+        <v-icon>mdi-chevron-right</v-icon>
       </v-tabs>
     </v-card>
 
@@ -163,6 +167,14 @@ export default {
 
 
 <style>
+.v-app-bar-title__content {
+  display: none !important;
+}
+
+.v-tabs-slider-wrapper {
+  display: none !important;
+}
+
 /* Without scope to change the tabs background */
 /*  */
 div[role="tablist"] {
