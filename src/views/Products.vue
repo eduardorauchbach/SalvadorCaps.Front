@@ -42,7 +42,12 @@ export default {
       });
     },
     async getBrand(brandName) {
-      await Axios.get('https://salvadorcapsapi.azurewebsites.net/api/Brand?name=' + brandName).then((response => {
+      let params = {
+        name: brandName
+      }
+      await Axios.get('https://salvadorcapsapi.azurewebsites.net/api/Brand', {
+        params: params
+      }).then((response => {
         this.brand = response.data[0];
       }))
     },

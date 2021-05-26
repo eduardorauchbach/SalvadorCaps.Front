@@ -1,7 +1,7 @@
 <template>
   <v-row class="center main">
     <v-col xl="2" lg="3" md="4" sm="5" cols="7" v-for="item in items" :key="item.id">
-      <v-card max-width="400" max-height="calc(100vh - 388px)" class="transparent brand pad-footer ">
+      <v-card class="transparent brand">
         <router-link :to="{ name:'Products', params: { brandName: item.name }}">
           <img class="brand-box" :src=item.desktopSpotlightImage />
         </router-link>
@@ -10,7 +10,7 @@
   </v-row>
 </template>
 <script>
-import Axios from 'axios'
+
 export default {
   // Definição das props do componente
   props: {
@@ -40,10 +40,8 @@ export default {
   overflow: hidden;
 }
 .brand-box {
-  height: 100%;
-  width: 100%;
-  width: 230%;
+  width: 180%;
   transform: skewX(-17deg);
-  margin-left: -35%;
+  margin: -8% -39% !important;
 }
 </style>

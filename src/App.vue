@@ -18,19 +18,20 @@
     </v-app-bar-title>
     <v-card tile>
       <v-tabs dark show-arrows class="navbar">
-        <v-icon>mdi-chevron-left</v-icon>
-        <v-spacer></v-spacer>
         <v-row justify-md="center" class="navbar-row">
-          <v-tab v-for="(item, index) in menuItems" :key="index" :to="{ name: 'Products', params: { brandName: item.name }}" class="items">
-            <v-icon class="navbar-bullet" v-if="showBullets(index)">mdi-circle-medium</v-icon>{{ item.name }}
-          </v-tab>
+          <div v-for="(item, index) in menuItems" :key="index">
+            <v-tab class="navbar-bullet" v-if="showBullets(index)" disabled="disabled">
+              <v-icon>mdi-circle-medium</v-icon>
+            </v-tab>
+            <v-tab :to="{ name: 'Products', params: { brandName: item.name }}" class="items">
+              {{ item.name }}
+            </v-tab>
+          </div>
         </v-row>
-        <v-spacer></v-spacer>
-        <v-icon>mdi-chevron-right</v-icon>
       </v-tabs>
     </v-card>
 
-    <v-container class="main">
+    <v-container class="pad-footer">
       <router-view />
     </v-container>
 
@@ -99,10 +100,15 @@ export default {
   padding: 0.9em 0;
   color: #dadada;
   font-weight: 900;
+  min-width: 50px !important;
 }
 
 .navbar-bullet {
   font-size: 2em !important;
+  float: left;
+  padding: 0px !important;
+  min-width: 30px;
+  padding-top: 25px !important;
 }
 
 .social-relative-container {
@@ -209,12 +215,16 @@ div[role="tablist"]::before {
   box-shadow: none !important;
 }
 
+.main {
+  position: relative;
+}
+
 .center {
   display: flex;
   justify-content: center;
 }
 
 .pad-footer {
-  padding-bottom: 100px;
+  padding-bottom: 100px !important;
 }
 </style>
